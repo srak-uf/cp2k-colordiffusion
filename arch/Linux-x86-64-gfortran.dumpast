@@ -1,0 +1,21 @@
+#
+# gfortran arch file, recommended to use gfortran >= 4.6
+# building libraries (fftw3, libint, libxc, scalapack, smm) is needed to use this arch file
+# sdbg is intended for serial code development, not production
+#
+CC       = cc
+CPP      = 
+FC       = gfortran
+LD       = gfortran
+AR       = ar -r
+
+CPPFLAGS =
+DFLAGS   =
+FCFLAGS  = -O0 -fstrict-aliasing -fbacktrace -g -fbounds-check -ffree-form -fdump-fortran-original -fopenmp $(DFLAGS) 
+LDFLAGS  = $(FCFLAGS)
+LIBS     = -llapack -lblas 
+
+FCLOGPIPE =  > $(notdir $<).ast
+
+export LC_ALL=C
+#EOF

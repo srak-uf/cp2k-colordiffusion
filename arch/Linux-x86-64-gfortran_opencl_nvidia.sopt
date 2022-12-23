@@ -1,0 +1,49 @@
+# - CentOS 6.5 (x86_64) [ module load gfortran-suite/4.8.2 ]
+# - gcc            4.8.2
+# - gfortran       4.8.2
+# - Intel MKL      Parallel Studio XE v2011-08-23
+# - FFTW3          3.3.3
+# - LIBXC          2.0.3
+# - LIBINT         1.1.5 (with non default: --with-libint-max-am=5
+#                                           --with-libderiv-max-am1=4)
+# - OpenCL         1.1 (NVIDIA)
+#
+
+# LIB's ################################################################
+
+LIBS     = -L${FFTW3_PATH}/lib \
+             -lfftw3
+LIBS    += -Wl,--start-group \
+             $(INTEL_MKL_LIB)/libmkl_intel_lp64.a \
+             $(INTEL_MKL_LIB)/libmkl_core.a \
+             $(INTEL_MKL_LIB)/libmkl_sequential.a \
+           -Wl,--end-group \
+           -lpthread -lm -ldl
+LIBS    += -L$(LIBINT_PATH)/lib \
+             -lderiv \
+             -lint
+LIBS    += -L$(LIBXC_PATH)/lib \
+             -lxc
+LIBS    += -lOpenCL
+
+# PROG's ###############################################################
+CPP      =
+CC       = gcc
+FC       = gfortran
+LD       = gfortran
+AR       = ar -r
+
+# FLAG's ###############################################################
+DFLAGS   = -D__FFTW3 \
+           -D__ACC -D__DBCSR_ACC -D__OPENCL \
+           -D__LIBXC2 \
+           -D__LIBINT -D__LIBINT_MAX_AM=6 -D__LIBDERIV_MAX_AM1=5 \
+           -D__USE_CP2K_TRACE \
+           -D__HAS_ISO_C_BINDING
+
+
+AFLAGS   = $(DFLAGS) -O3 -mtune=native -ffast-math -funroll-loops -ftree-vectorize
+CPPFLAGS = $(DFLAGS) -traditional -C
+CFLAGS   = $(AFLAGS)
+FCFLAGS  = $(AFLAGS) -ffree-form -ffree-line-length-none
+LDFLAGS  = $(FCFLAGS)

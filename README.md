@@ -1,6 +1,6 @@
 # cp2k-colordiffusion
 ## Overview
-Chemical color-diffusion nonequilibrium molecular dynamics is implemented on CP2Kv6.1.
+Chemical color-diffusion nonequilibrium molecular dynamics is implemented on CP2Kv6.1.  
 The examples of input files is located in the "test_nemd" directory.
 
 ## Publications

@@ -26,6 +26,7 @@
        &NOSE
          LENGTH  1
          TIMECON     9.9999999999999986E+01
+       &END NOSE
      &END THERMOSTAT
      &COLOR
        CDTYPE  CCD
